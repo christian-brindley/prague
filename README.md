@@ -8,6 +8,28 @@
 ## Sample
 
 - [IDM sample for bidirectional sync](https://docs.pingidentity.com/pingidm/7.5/samples-guide/sync-with-ldap-bidirectional.html)
+- Run inbound reconciliation
+- Update a user in IDM - observe outbound update to PingDS
+
+## Add livesync
+
+- Enable changelog numbers
+
+```
+ds/bin/dsconfig set-replication-server-prop \
+          --provider-name "Multimaster Synchronization" \
+          --set changelog-enabled:enabled \
+          --hostname localhost \
+          --port 4444 \
+          --bindDn uid=admin \
+          --bindPassword password \
+          --trustAll \
+          --no-prompt
+```
+
+- Update connector with livesync base DN `dc=com`
+- Add a schedule for livesync at 30s interval ([watch the vidao](videos/livesync.mov))
+- Change in PingDS - observe update in IDM
 
 ## Add group sync
 
