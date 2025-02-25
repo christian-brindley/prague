@@ -27,6 +27,8 @@ ds/bin/dsconfig set-replication-server-prop \
           --no-prompt
 ```
 
+(or use dsconfig interactively - [watch the video](videos/changelog.mov))
+
 - Update connector with livesync base DN `dc=com`
 - Add a schedule for livesync at 30s interval ([watch the vidao](videos/livesync.mov))
 - Change in PingDS - observe update in IDM
