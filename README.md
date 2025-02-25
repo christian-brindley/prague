@@ -30,28 +30,29 @@ ds/bin/dsconfig set-replication-server-prop \
 (or use dsconfig interactively - [watch the video](videos/changelog.mov))
 
 - Update connector with livesync base DN `dc=com`
-- Add a schedule for livesync at 30s interval ([watch the vidao](videos/livesync.mov))
+- Add a schedule for livesync at 30s interval
 - Change in PingDS - observe update in IDM
 
-## Add group sync
+([Watch the video](videos/livesync.mov))
 
-- Create new managed object `group`
-- Properties `name`, `description`
-- Create mapping from LDAP group to new object
+## Inbound sync of groups
+
+- Create mapping from LDAP group to organization
 - LDAP `cn` -> `name`
+- LDAP `description` -> `description`
 
-Requires transformation for `cn` property
+Requires transformation for `cn` and `description` properties
 
 ```
 source[0];
 ```
 
-## Sync group members
+[Watch the video](videos/groupmapping.mov)
 
-- Add `members` property to `group` object
-- Two way relationship with `user`
+## Inbound sync of group members
+
 - Add users to groups in LDAP
-- Map LDAP `uniqueMember` property to user `members` property
+- Map LDAP `uniqueMember` property to organisation `members` property
 - Transform to relationship
 
 ```
@@ -78,3 +79,5 @@ source.forEach((uniqueMember) => {
 
 members;
 ```
+
+[Watch the video](videos/groupmembership.mov)
