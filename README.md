@@ -8,12 +8,15 @@
 ## Sample
 
 - [IDM sample for bidirectional sync](https://docs.pingidentity.com/pingidm/7.5/samples-guide/sync-with-ldap-bidirectional.html)
-- Run inbound reconciliation
+- Install and start PingDS
+- Install and start PingIDM with sample profile
+- Explore connector and mapping in IDM admin console
+- Run inbound reconciliation - observe users created
 - Update a user in IDM - observe outbound update to PingDS
 
 ## Add livesync
 
-- Enable changelog numbers
+- Enable changelog with change numbers
 
 ```
 ds/bin/dsconfig set-replication-server-prop \
@@ -33,27 +36,27 @@ ds/bin/dsconfig set-replication-server-prop \
 - Add a schedule for livesync at 30s interval
 - Change in PingDS - observe update in IDM
 
-([Watch the video](videos/livesync.mov))
+[Watch the video](videos/livesync.mov)
 
-## Inbound sync of groups
+## Inbound sync of roles
 
-- Create mapping from LDAP group to organization
-- LDAP `cn` -> `name`
-- LDAP `description` -> `description`
+- Create mapping from LDAP groups to IDM roles
+- LDAP `cn` -> IDM `name`
+- LDAP `description` -> IDM `description`
 
-Requires transformation for `cn` and `description` properties
+Requires transformation for `cn` and `description` properties as follows (because LDAP is configured with multivalue properties)
 
 ```
 source[0];
 ```
 
-[Watch the video](videos/groupmapping.mov)
+[Watch the video](videos/rolemapping.mov)
 
-## Inbound sync of group members
+## Inbound sync of group members to role members
 
 - Add users to groups in LDAP
-- Map LDAP `uniqueMember` property to organisation `members` property
-- Transform to relationship
+- Map LDAP `uniqueMember` property to role `members` property
+- Transform to an IDM relationship as follows:
 
 ```
 function extractUID(dn) {
@@ -80,4 +83,4 @@ source.forEach((uniqueMember) => {
 members;
 ```
 
-[Watch the video](videos/groupmembership.mov)
+[Watch the video](videos/rolemembers.mov)
